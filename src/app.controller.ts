@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest } from './type';
 
@@ -8,7 +8,7 @@ export class AppController {
 
   @Get('getuser')
   getHello(@Query() res: UserGetUserRequest): RoResponse<UserGetUserResponse> {
-    console.log("res->", res)
+    console.log("res-e>", res)
     return {code: 0, message: "OK",data: {...this.appService.getHello(res)}};
   }
 
@@ -16,5 +16,11 @@ export class AppController {
   postHello(@Body() res: UserGetUserRequest): RoResponse<UserGetUserResponse> {
     console.log("res->", res)
     return {code: 0, message: "OK",data: {...this.appService.getHello(res)}};
+  }
+
+  @Get(':name/:age')
+  getUserByName(@Param() param: {name: string; age: string}): RoResponse<UserGetUserResponse> {
+    console.log("res-r>", param)
+    return {code: 0, message: "OK",data: { name: param.name}};
   }
 }

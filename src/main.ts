@@ -7,3 +7,5 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
+console.log("\n程序已启动", "端口为3000\n")
