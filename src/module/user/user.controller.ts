@@ -14,15 +14,15 @@ export class UserController {
     return {code: 0, message: "OK",data: {...this.userService.getHello(res)}};
   }
 
-  @Post('getuser')
+  @Post('getuserlist')
   postHello(@Body() res: UserGetUserRequest): RoResponse<UserGetUserResponse> {
     console.log("res-4343>", res)
     return {code: 0, message: "OK",data: {...this.userService.getHello(res)}};
   }
 
-  @Get(':name/:age')
-  getUserByName(@Param('name') name: string, @Param('age', new ParseIntPipe()) age: string): RoResponse<UserGetUserResponse> {
-    console.log("res-的是r>", typeof age, typeof name)
-    return {code: 0, message: "OK",data: { name: age}};
+  @Post()
+  changePassword(@Body() password: string): RoResponse<UserGetUserResponse> {
+    console.log("res-的是r>", typeof password, typeof password)
+    return {code: 0, message: "OK",data: { name: password}};
   }
 }
