@@ -31,8 +31,7 @@ export class UserService {
     return await this.usersRepository.save({name, password});
   }
 
-  async updateUser(id: string, name: string): Promise<UserEntity> {
-    console.log(id, name)
+  async updateUser(id: string, name: string): Promise<string> {
     const user = await getRepository(UserEntity).findOne({where: {id}});
     if (!user) {
       throw new HttpException({
@@ -41,7 +40,8 @@ export class UserService {
       }, HttpStatus.BAD_REQUEST)
     }
     user.name = name;
-    return await this.usersRepository.save(user);
+    await this.usersRepository.save(user);
+    return "ok"
   }
 
   async deteleUser(name: string): Promise<any> {
