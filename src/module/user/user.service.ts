@@ -53,7 +53,7 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
-    await this.usersRepository.delete({name})
+    await this.usersRepository.softDelete(user)
     return "ok";
   }
 
