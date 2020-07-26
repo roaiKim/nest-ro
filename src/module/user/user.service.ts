@@ -20,7 +20,7 @@ export class UserService {
     return !!quest;
   }
 
-  async createUser(name: string, password: string): Promise<UserEntity> {
+  async createUser(name: string, password: string): Promise<string> {
     const user = await getRepository(UserEntity).findOne({where: {name}});
     if (user) {
       throw new HttpException({
@@ -28,7 +28,8 @@ export class UserService {
         error: '用户已注册'
       }, HttpStatus.BAD_REQUEST)
     }
-    return await this.usersRepository.save({name, password});
+    await this.usersRepository.save({name, password});
+    return "ok";
   }
 
   async updateUser(id: string, name: string): Promise<string> {
