@@ -12,3 +12,8 @@ export interface UserGetUserRequest {
     name: string;
     password: string;
 }
+
+export interface UserUpdateUserRequest {
+    name: string;
+    id: string;
+}
