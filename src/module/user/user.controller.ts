@@ -35,21 +35,21 @@ export class UserController {
   async createUser(@Body() request: UserGetUserRequest): Promise<any> {
     const user = await this.userService.createUser(request.name, request.password)
     console.log("user--->", user);
-    return {code: 0, message: "OK",data: {...user}};
+    return {code: 0, message: "OK",data: user};
   }
 
   @Post('update/:id')
   async updateUser(@Param('id') id: string, @Body() request: UserUpdateUserRequest): Promise<any> {
     const user = await this.userService.updateUser(id, request.name)
     console.log("user--->", user);
-    return {code: 0, message: "OK",data: {...user}};
+    return {code: 0, message: "OK",data: user};
   }
 
   @Put('detele')
   async deteleUser(@Body() request: UserGetUserRequest): Promise<any> {
     const user = await this.userService.deteleUser(request.name)
     console.log("user--->", user);
-    return {code: 0, message: "OK",data: {...user}};
+    return {code: 0, message: "OK",data: user};
   }
 
   @Post()
