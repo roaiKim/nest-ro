@@ -41,10 +41,10 @@ export class UserService {
     }
     user.name = name;
     await this.usersRepository.save(user);
-    return "ok"
+    return "ok";
   }
 
-  async deteleUser(name: string): Promise<any> {
+  async deteleUser(name: string): Promise<string> {
     const user = await getRepository(UserEntity).findOne({where: {name}});
     if (!user) {
       throw new HttpException({
@@ -52,7 +52,8 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
-    return await this.usersRepository.delete({name})
+    await this.usersRepository.delete({name})
+    return "ok";
   }
 
   async getUserByName(name: string): Promise<UserEntity> {
