@@ -12,8 +12,10 @@ export class UserService {
     private connection: Connection
   ){}
 
-  getHello(quest: UserGetUserRequest): UserGetUserRequest {
-    return {...quest};
+  async getUserList(quest: UserGetUserRequest): Promise<UserEntity[]> {
+    const user = await getRepository(UserEntity).findAndCount();
+    console.log("user", user)
+    return user[0];
   }
 
   getRoles(quest: string): boolean {
@@ -25,7 +27,8 @@ export class UserService {
     if (user) {
       throw new HttpException({
         message: '',
-        error: '用户已注册'
+        error: '用户已注册',
+        code: 1234
       }, HttpStatus.BAD_REQUEST)
     }
     await this.usersRepository.save({name, password});
@@ -40,8 +43,9 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
+    console.log("deteleUser", user)
     user.name = name;
-    await this.usersRepository.save(user);
+    await this.usersRepository.update(id, user);
     return "ok";
   }
 
@@ -53,11 +57,12 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
-    await this.usersRepository.softDelete(user)
+    console.log("deteleUser", user)
+    await this.usersRepository.delete(user)
     return "ok";
   }
 
-  async getUserByName(name: string): Promise<UserEntity> {
+  async getUser(name: string): Promise<UserEntity> {
     const user = await getRepository(UserEntity).findOne({where: {name}});
     if (!user) {
       throw new HttpException({

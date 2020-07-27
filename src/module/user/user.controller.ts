@@ -13,20 +13,23 @@ export class UserController {
     return {code: 0, message: "OK",data: { name: password}};
   }
 
-  @Get('getuser')
+  /* @Get('getuser')
   @UseGuards(UserRole)
   getHello(@Query() res: UserGetUserRequest): RoResponse<UserGetUserResponse> {
     return {code: 0, message: "OK",data: {...this.userService.getHello(res)}};
-  }
+  } */
 
-  @Post('getuserlist')
-  postHello(@Body() res: UserGetUserRequest): RoResponse<UserGetUserResponse> {
-    return {code: 0, message: "OK",data: {...this.userService.getHello(res)}};
+  @Get('getuserlist')
+  async postHello(@Query() res: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {
+    const user = await this.userService.getUserList(res)
+    console.log('--res-->', user)
+    /// @ts-ignore
+    return {code: 0, message: "OK",data: {list: user}};
   }
 
   @Post('get')
   async getUserByName(@Body() res: UserGetUserRequest): Promise<any> {
-    const user = await this.userService.getUserByName(res.name)
+    const user = await this.userService.getUser(res.name)
     console.log("user--->", user);
     return {code: 0, message: "OK",data: {...user}};
   }
