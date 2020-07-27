@@ -17,3 +17,8 @@ export interface UserUpdateUserRequest {
     name: string;
     id: string;
 }
+
+export interface PageLimitResponse<T> {
+    list: T[],
+    totalRecord: number
+}

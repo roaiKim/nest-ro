@@ -12,10 +12,12 @@ export class UserService {
     private connection: Connection
   ){}
 
-  async getUserList(quest: UserGetUserRequest): Promise<UserEntity[]> {
-    const user = await getRepository(UserEntity).findAndCount();
+  async getUserList(quest: UserGetUserRequest): Promise<[UserEntity[], number]> {
+    const user = await getRepository(UserEntity).findAndCount({
+      take: 10
+    });
     console.log("user", user)
-    return user[0];
+    return user;
   }
 
   getRoles(quest: string): boolean {
@@ -23,7 +25,7 @@ export class UserService {
   }
 
   async createUser(name: string, password: string): Promise<string> {
-    const user = await getRepository(UserEntity).findOne({where: {name}});
+    const user = await getRepository(UserEntity).findOne({where: {name}, withDeleted: true});
     if (user) {
       throw new HttpException({
         message: '',
@@ -58,12 +60,23 @@ export class UserService {
       }, HttpStatus.BAD_REQUEST)
     }
     console.log("deteleUser", user)
-    await this.usersRepository.delete(user)
+    await this.usersRepository.softDelete({name})
     return "ok";
   }
 
   async getUser(name: string): Promise<UserEntity> {
     const user = await getRepository(UserEntity).findOne({where: {name}});
+    if (!user) {
+      throw new HttpException({
+        message: '',
+        error: '用户不存在'
+      }, HttpStatus.BAD_REQUEST)
+    }
+    return user;
+  }
+
+  async login(request: UserGetUserRequest): Promise<UserEntity> {
+    const user = await getRepository(UserEntity).findOne({where: {...request}});
     if (!user) {
       throw new HttpException({
         message: '',
