@@ -4,15 +4,18 @@ import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequ
 import { UserRole } from 'guards/user.roles.guard';
 import { UserEntity } from './user.entity';
 import { Response } from 'express'
+import { AuthService } from 'module/auth/auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-
+  constructor(private readonly userService: UserService/* , private readonly authService: AuthService */) {}
+  @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body() request: UserGetUserRequest): Promise<RoResponse<UserEntity>> {
+  async login(@Body() request: UserGetUserRequest): Promise<RoResponse<any>> {
     const user = await this.userService.login(request)
-    return {code: 0, message: "OK",data: {...user}};
+    return {code: 0, message: "OK",data: {}};
+    // return this.authService.creatFicate({username: user.name, sub: user.id})
   }
 
   @Get('get')
