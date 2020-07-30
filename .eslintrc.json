@@ -21,7 +21,7 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "max-len": ["error", {"code": 160}],
-    "no-console": "warn",
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
     "object-curly-newline": ["error", {
       "ImportDeclaration": "never",
       "ExportDeclaration": { "multiline": true, "minProperties": 3 }
