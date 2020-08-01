@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, UseGuards, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, UseGuards, Delete, Res, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
@@ -18,6 +18,8 @@ export class UserController {
     // return this.authService.creatFicate({username: user.name, sub: user.id})
   }
 
+  @UseGuards(UserRole)
+  @SetMetadata("roles", "admin")
   @Get('get')
   async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity>> {
     const user = await this.userService.getUser(request.name)
@@ -30,6 +32,7 @@ export class UserController {
     return {code: 0, message: "OK",data: {list, totalRecord}};
   }
 
+  @SetMetadata("roles", ["admin", "ddd"])
   @Post('create')
   async createUser(@Body() request: UserGetUserRequest): Promise<RoResponse<string>> {
     const result = await this.userService.createUser(request.name, request.password)
