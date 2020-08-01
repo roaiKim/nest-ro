@@ -10,8 +10,8 @@ import { UserService } from "module/user/user.service";
 
 @Module({
     imports: [
-        forwardRef(() => UserModule),
-        PassportModule.register({defaultStrategy: 'jwt'}),
+        UserModule,
+        PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: {
@@ -19,7 +19,7 @@ import { UserService } from "module/user/user.service";
             }
         })
     ],
-    providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
+    providers: [AuthService, LocalStrategy, JwtStrategy],
     exports: [AuthService]
 })
 export class AuthModule {}
