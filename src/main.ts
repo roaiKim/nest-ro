@@ -8,4 +8,4 @@ async function bootstrap() {
 }
 bootstrap();
 
-console.log("\n程序已启动", "端口为3000\n")
+console.info("\n程序已启动", "端口为3000\n")

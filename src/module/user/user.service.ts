@@ -16,7 +16,7 @@ export class UserService {
     const user = await getRepository(UserEntity).findAndCount({
       take: 3
     });
-    console.log("user", user)
+    // console.log("user", user)
     return user;
   }
 
@@ -45,7 +45,7 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
-    console.log("deteleUser", user)
+    // console.log("deteleUser", user)
     user.name = name;
     await this.usersRepository.update(id, user);
     return "ok";
@@ -59,7 +59,7 @@ export class UserService {
         error: '用户不存在'
       }, HttpStatus.BAD_REQUEST)
     }
-    console.log("deteleUser", user)
+    // console.log("deteleUser", user)
     await this.usersRepository.softDelete({name})
     return "ok";
   }
