@@ -4,12 +4,15 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common"
 
 @Injectable()
 export class AuthService {
-    constructor (private readonly jwtService: JwtService, private readonly userService: UserService) {
+    constructor (
+        private readonly userService: UserService,
+        private readonly jwtService: JwtService,
+    ) {}
 
-    }
-
-    async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.userService.getUser(username)
+    async validateUser(name: string, password: string): Promise<any> {
+        console.log("AuthService-validateUser:", name, password)
+        const user = await this.userService.getUser(name)
+        console.log("userService-user:", user.password)
         if (user) {
             if (user.password === password) {
                 return user
@@ -28,7 +31,8 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    async creatFicate(user: {username: string; sub: string}) {
+    async login(user: {name: string; sub: string}) {
+        console.log("userService-login:", user)
         try {
             const token = this.jwtService.sign(user)
             return {

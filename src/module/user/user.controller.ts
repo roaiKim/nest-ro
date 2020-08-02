@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, UseGuards, Delete, Res, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
@@ -6,23 +6,26 @@ import { UserEntity } from './user.entity';
 import { Response } from 'express'
 import { AuthService } from 'module/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService/* , private readonly authService: AuthService */) {}
-  
+  constructor(private readonly userService: UserService, private readonly authService: AuthService) {}
+
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Body() request: UserGetUserRequest): Promise<RoResponse<any>> {
-    const user = await this.userService.login(request)
-    return {code: 0, message: "OK",data: {}};
-    // return this.authService.creatFicate({username: user.name, sub: user.id})
+    // const user = await this.userService.login(request)
+    console.log("login", request);
+    return this.authService.login({name: request.name, sub: request.password})
   }
 
-  @UseGuards(UserRole)
+  // @UseGuards(UserRole)
+  @UseGuards(AuthGuard('jwt'))
   @SetMetadata("roles", "admin")
   @Get('get')
-  async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity>> {
+  async getUser(@Query() request: UserGetUserRequest, @Req() req: Request & {user: {userId: string, username: string}}): Promise<RoResponse<UserEntity>> {
+    console.log("--ops", request, req.user)
     const user = await this.userService.getUser(request.name)
     return {code: 0, message: "OK",data: {...user}};
   }

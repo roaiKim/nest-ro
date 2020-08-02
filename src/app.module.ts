@@ -13,7 +13,6 @@ import { AuthModule } from 'module/auth/auth.module';
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
     }),
-    AuthModule,
     UserModule
   ]
 })

@@ -2,7 +2,7 @@ import { CanActivate, Injectable, ExecutionContext, HttpException, HttpStatus } 
 import { UserService } from 'module/user/user.service';
 import { Reflector } from '@nestjs/core';
 
-@Injectable()
+/* @Injectable()
 export class UserRole1 implements CanActivate {
     constructor(private readonly userService: UserService) {}
     canActivate(context: ExecutionContext): boolean {
@@ -16,7 +16,7 @@ export class UserRole1 implements CanActivate {
         }
         return false
     }
-}
+} */
 
 @Injectable()
 export class UserRole implements CanActivate {

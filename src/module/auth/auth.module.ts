@@ -6,16 +6,16 @@ import { AuthService } from "./auth.service";
 import { LocalStrategy } from "./local.strategy";
 import { JwtStrategy } from "./jwt.strategy";
 import { UserModule } from "module/user/user.module";
-import { UserService } from "module/user/user.service";
+// import { UserService } from "module/user/user.service";
 
 @Module({
     imports: [
-        UserModule,
+        forwardRef(() => UserModule),
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: {
-                expiresIn: '60s'
+                expiresIn: '1h'
             }
         })
     ],
