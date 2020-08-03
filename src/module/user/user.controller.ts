@@ -2,6 +2,7 @@ import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
+import { JwtAuthGuard } from 'guards/auth.ext.guard';
 import { UserEntity } from './user.entity';
 import { Response } from 'express'
 import { AuthService } from 'module/auth/auth.service';
@@ -14,14 +15,15 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body() request: UserGetUserRequest): Promise<RoResponse<any>> {
+  async login(@Body() request: UserGetUserRequest, @Req() req: Request & {user: any}): Promise<RoResponse<any>> {
     // const user = await this.userService.login(request)
-    console.log("login", request);
-    return this.authService.login({name: request.name, sub: request.password})
+    console.log("login", request, req.user);
+    return this.authService.login({name: request.name, userId: req.user.id})
   }
 
   // @UseGuards(UserRole)
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
   async getUser(@Query() request: UserGetUserRequest, @Req() req: Request & {user: {userId: string, username: string}}): Promise<RoResponse<UserEntity>> {

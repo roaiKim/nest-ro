@@ -31,7 +31,7 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    async login(user: {name: string; sub: string}) {
+    async login(user: {name: string; userId: string}) {
         console.log("userService-login:", user)
         try {
             const token = this.jwtService.sign(user)
