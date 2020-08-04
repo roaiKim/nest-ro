@@ -1,6 +1,8 @@
 import {JwtService} from "@nestjs/jwt"
 import { UserService } from "module/user/user.service"
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common"
+import { RoResponse } from "module/user/type"
+import { UserEntity } from "module/user/user.entity"
 
 @Injectable()
 export class AuthService {
@@ -9,37 +11,24 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async validateUser(name: string, password: string): Promise<any> {
-        console.log("AuthService-validateUser:", name, password)
-        const user = await this.userService.getUser(name)
-        console.log("userService-user:", user.password)
+    async validateUser(name: string, password: string): Promise<UserEntity> {
+        const user = await this.userService.login(name, password)
         if (user) {
-            if (user.password === password) {
-                return user
-            } else {
-                throw new HttpException({
-                    error: "密码错误啊",
-                    message: "密码错误"
-                }, HttpStatus.BAD_REQUEST)
-            }
+            return user
         } else {
             throw new HttpException({
-                error: "没有这个人",
-                message: "没有这个人啊"
+                error: "用户名或密码错误",
+                message: "用户名或密码错误"
             }, HttpStatus.BAD_REQUEST)
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    async login(user: {name: string; userId: string}) {
-        console.log("userService-login:", user)
+    async login(user: {name: string; userId: string}): Promise<RoResponse<string>> {
         try {
             const token = this.jwtService.sign(user)
             return {
                 code: 0,
-                data: {
-                    token
-                },
+                data: token,
                 message: "登录成功"
             }
         } catch (error) {

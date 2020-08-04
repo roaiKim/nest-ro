@@ -8,6 +8,7 @@ import { Response } from 'express'
 import { AuthService } from 'module/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { JwtUserToken } from 'module/auth/auth.type';
 
 @Controller('user')
 export class UserController {
@@ -15,23 +16,22 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body() request: UserGetUserRequest, @Req() req: Request & {user: any}): Promise<RoResponse<any>> {
-    // const user = await this.userService.login(request)
-    console.log("login", request, req.user);
-    return this.authService.login({name: request.name, userId: req.user.id})
+  async login(@Req() request: Request & {user: UserEntity}): Promise<RoResponse<any>> {
+    const {user} = request;
+    const {name, id} = user;
+    return this.authService.login({name, userId: id})
   }
 
   // @UseGuards(UserRole)
-  // @UseGuards(AuthGuard('jwt'))
   @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
-  async getUser(@Query() request: UserGetUserRequest, @Req() req: Request & {user: {userId: string, username: string}}): Promise<RoResponse<UserEntity>> {
-    console.log("--ops", request, req.user)
+  async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {
     const user = await this.userService.getUser(request.name)
     return {code: 0, message: "OK",data: {...user}};
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('getuserlist')
   async getUserList(@Query() request: UserGetUserRequest): Promise<RoResponse<PageLimitResponse<UserEntity>>> {
     const [list, totalRecord] = await this.userService.getUserList(request)
@@ -68,5 +68,15 @@ export class UserController {
     // console.log("response", response)
     // response.redirect("https://www.baidu.com")
     return response.json({data: "str" });
+  }
+
+  // 通过jwt获取user
+  @UseGuards(JwtAuthGuard)
+  @Get('check')
+  async getCurrentUserByCookie(@Req() request: Request & {user: JwtUserToken}): Promise<RoResponse<UserEntity>> {
+    const {user} = request;
+    const {userId=""} = user;
+    const userInfo = await this.userService.getUserByCookie(userId)
+    return {code: 0, message: "OK",data: userInfo};
   }
 }

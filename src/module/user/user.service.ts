@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UserGetUserRequest } from './type';
-import { Repository, Connection, getRepository } from 'typeorm';
+import { Repository, Connection, getRepository, Like } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -13,8 +13,9 @@ export class UserService {
   ){}
 
   async getUserList(quest: UserGetUserRequest): Promise<[UserEntity[], number]> {
-    const user = await getRepository(UserEntity).findAndCount({
-      take: 3
+    const user = await this.usersRepository.findAndCount({
+      take: 2,
+      skip: 20
     });
     // console.log("user", user)
     return user;
@@ -25,7 +26,7 @@ export class UserService {
   }
 
   async createUser(name: string, password: string): Promise<string> {
-    const user = await getRepository(UserEntity).findOne({where: {name}, withDeleted: true});
+    const user = await this.usersRepository.findOne({where: {name}, withDeleted: true});
     if (user) {
       throw new HttpException({
         message: '',
@@ -38,7 +39,7 @@ export class UserService {
   }
 
   async updateUser(id: string, name: string): Promise<string> {
-    const user = await getRepository(UserEntity).findOne({where: {id}});
+    const user = await this.usersRepository.findOne({where: {id}});
     if (!user) {
       throw new HttpException({
         message: '',
@@ -52,7 +53,7 @@ export class UserService {
   }
 
   async deteleUser(name: string): Promise<string> {
-    const user = await getRepository(UserEntity).findOne({where: {name}});
+    const user = await this.usersRepository.findOne({where: {name}});
     if (!user) {
       throw new HttpException({
         message: '',
@@ -64,8 +65,9 @@ export class UserService {
     return "ok";
   }
 
-  async getUser(name: string): Promise<UserEntity> {
-    const user = await getRepository(UserEntity).findOne({where: {name}});
+  async getUser(name: string): Promise<UserEntity[]> {
+    // const user = await this.usersRepository.findOne({name: Like(`%${name}%`)});
+    const user = await this.usersRepository.find({where: [{name: Like(`%luo%`)}, {id: Like(`%4329%`)}]});
     if (!user) {
       throw new HttpException({
         message: '',
@@ -75,8 +77,8 @@ export class UserService {
     return user;
   }
 
-  async login(request: UserGetUserRequest): Promise<UserEntity> {
-    const user = await getRepository(UserEntity).findOne({where: {...request}});
+  async getUserIncludePassword(name: string): Promise<UserEntity> {
+    const user = await this.usersRepository.findOne({where: {name}});
     if (!user) {
       throw new HttpException({
         message: '',
@@ -84,5 +86,20 @@ export class UserService {
       }, HttpStatus.BAD_REQUEST)
     }
     return user;
+  }
+
+  async getUserByCookie(id: string): Promise<UserEntity> {
+    const user = await this.usersRepository.findOne({where: {id}});
+    if (!user) {
+      throw new HttpException({
+        message: '',
+        error: '用户不存在'
+      }, HttpStatus.BAD_REQUEST)
+    }
+    return user;
+  }
+
+  async login(name: string, password: string): Promise<UserEntity> {
+    return await this.usersRepository.findOne({where: {name, password}});
   }
 }
