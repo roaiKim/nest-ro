@@ -3,8 +3,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './module/user/user.module';
 import { ConfigModule, ConfigService } from 'nestjs-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './module/user/user.entity';
-import { AuthModule } from 'module/auth/auth.module';
+import { FileModule } from 'module/fileManage/file.module';
 
 @Module({
   imports: [
@@ -13,7 +12,8 @@ import { AuthModule } from 'module/auth/auth.module';
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
     }),
-    UserModule
+    UserModule,
+    FileModule
   ]
 })
 export class AppModule {}

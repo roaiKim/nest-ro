@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello({name: "ro", password: "123"})).toBe('Hello World!');
+      expect(appController.getUser({name: "ro", password: "123"})).toBe('Hello World!');
     });
   });
 });
