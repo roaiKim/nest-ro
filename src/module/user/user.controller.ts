@@ -28,6 +28,7 @@ export class UserController {
   @Get('get')
   async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {
     const user = await this.userService.getUser(request.name)
+    console.log("--getUser-->", user)
     return {code: 0, message: "OK",data: {...user}};
   }
 
