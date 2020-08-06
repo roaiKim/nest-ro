@@ -4,6 +4,7 @@ import { UserModule } from './module/user/user.module';
 import { ConfigModule, ConfigService } from 'nestjs-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileModule } from 'module/fileUpload/file.module';
+import { HttpRoModule } from 'module/http/http.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { FileModule } from 'module/fileUpload/file.module';
       inject: [ConfigService],
     }),
     UserModule,
-    FileModule
+    FileModule,
+    HttpRoModule
   ]
 })
 export class AppModule {}
