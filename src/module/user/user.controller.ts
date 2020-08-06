@@ -67,8 +67,8 @@ export class UserController {
   // @Redirect('https://www.baidu.com', 302)
   redirectLogin(@Res() response: Response): any {
     // console.log("response", response)
-    // response.redirect("https://www.baidu.com")
-    return response.json({data: "str" });
+    response.redirect("https://www.baidu.com")
+    // return response.json({data: "str" });
   }
 
   // 通过jwt获取user
