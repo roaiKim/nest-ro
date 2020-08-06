@@ -23,7 +23,7 @@ export class UserController {
   }
 
   // @UseGuards(UserRole)
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
   async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {

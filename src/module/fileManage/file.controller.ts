@@ -5,6 +5,7 @@ import { UploadFile } from "./file.type";
 
 @Controller("file")
 export class FileController {
+    constructor(private readonly httpService: HttpService) {}
     
     @Post("upload")
     @UseInterceptors(FileInterceptor("file"))
@@ -21,8 +22,10 @@ export class FileController {
     }
 
     @Get("get")
-    uploadsss(@Query() id: string): RoResponse<string> {
-        console.log("id-==-", id)
-        return {code: 0, message: "ok", data: null}
+    async uploadsss(@Query("name") id: string): Promise<RoResponse<any>> {
+        console.log("id", id)
+        const user = await this.httpService.get("http://localhost:3000/api/user/get" + "?name=" + id)
+        console.log("iuserd", user)
+        return {code: 0, message: "ok", data: user}
     }
 }
