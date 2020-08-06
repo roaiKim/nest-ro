@@ -8,10 +8,15 @@ export default {
     storage: diskStorage({
       destination: join(__dirname, `../uploads/${new Date().toLocaleDateString()}`),
       filename: (req, file, cb) => {
-          console.log("file--", file)
           try {
-            const filename = `${uuidv4().replace(/-/g, "")}-${Base64.encodeURL(file.originalname.split('.')[0])}.${file.originalname.split('.')[1]}`;
-            return cb(null, filename);
+            const origin = file.originalname.split('.');
+            if (file.mimetype.startsWith("image/")) {
+              const filename = `${uuidv4().replace(/-/g, "")}-${Base64.encodeURL(origin[0])}.${origin[origin.length - 1]}`;
+              return cb(null, filename);
+            } else {
+              const filename = `${origin.slice(0, -1).join("")}-${uuidv4().replace(/-/g, "")}.${origin[origin.length - 1] || ""}`;
+              return cb(null, filename);
+            }
           } catch {
             const filename = `${uuidv4()}-${file.originalname}}`;
             return cb(null, filename);
