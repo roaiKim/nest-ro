@@ -14,6 +14,7 @@ export default {
               const filename = `${uuidv4().replace(/-/g, "")}-${Base64.encodeURL(origin[0])}.${origin[origin.length - 1]}`;
               return cb(null, filename);
             } else {
+              console.log(file)
               const filename = `${origin.slice(0, -1).join("")}-${uuidv4().replace(/-/g, "")}.${origin[origin.length - 1] || ""}`;
               return cb(null, filename);
             }
@@ -23,4 +24,7 @@ export default {
           }
       },
     }),
+    fileFilter: (req, file, cb) => {
+      console.log("-fileFilter--fileFilter", file)
+    }
 };

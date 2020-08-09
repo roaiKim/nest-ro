@@ -15,4 +15,6 @@ export interface UploadFile {
     filename: string;
     /** Location of the uploaded file (DiskStorage) */
     path: string;
+    /** A Buffer of the entire file (MemoryStorage) */
+    buffer: Buffer;
 }

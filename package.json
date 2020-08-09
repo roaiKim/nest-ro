@@ -27,6 +27,7 @@
     "@nestjs/passport": "^7.1.0",
     "@nestjs/platform-express": "^7.4.2",
     "@nestjs/typeorm": "^7.1.0",
+    "compressing": "^1.5.1",
     "js-base64": "^3.4.4",
     "mysql": "^2.18.1",
     "nestjs-config": "^1.4.7",
