@@ -28,9 +28,10 @@ export class FileController {
         console.log("filesssll", file)
         const origin = file.originalname.split('.');
         const name = `${origin.slice(0, -1).join("")}`;
-        zip.uncompress(file.buffer, path.join(__dirname, name)).then(() => {
+        const uploadPath = path.join(__dirname, `../../uploads/${new Date().toISOString().substring(0, 10)}`, name)
+        zip.uncompress(file.buffer, uploadPath).then(() => {
             console.error("success!");
-            rmdir(path.join(__dirname, name, "__MACOSX"), (err) => {
+            rmdir(path.join(uploadPath, "__MACOSX"), (err) => {
                 console.error("rmdir, success!", err);
             })
         }).catch(err => {
