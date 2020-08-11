@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from 'nestjs-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileModule } from 'module/fileUpload/file.module';
 import { HttpRoModule } from 'module/http/http.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -12,6 +14,10 @@ import { HttpRoModule } from 'module/http/http.module';
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'view', 'dist'),
+      exclude: ['/api*']
     }),
     UserModule,
     FileModule,
