@@ -38,6 +38,6 @@ export interface SystemManagement {
 }
 
 export interface UserLoginRequest {
-  username: string;
+  name: string;
   password: string;
 }

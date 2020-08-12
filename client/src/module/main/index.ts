@@ -15,13 +15,14 @@ class MainModule extends Module<State> {
 
   @Loading('mask')
   async fetchCurrentuser() {
-    const response = await MainService.fetchCurrentUser({ username: 's', password: 'ro' });
+    const response = await MainService.fetchCurrentUser({ name: 's', password: 'ro' });
     this.setState({ user: response.data.name });
   }
 
   @Loading('mask')
-  async setCurrentuser(name: string) {
-    this.setState({ user: name });
+  async setCurrentuser(request: any) {
+    const response = await MainService.login(request);
+    this.setState({ user: response.data.name });
   }
 }
 

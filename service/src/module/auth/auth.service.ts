@@ -23,20 +23,11 @@ export class AuthService {
         }
     }
 
-    async login(user: {name: string; userId: string}): Promise<RoResponse<string>> {
+    login(user: {name: string; userId: string}): string {
         try {
-            const token = this.jwtService.sign(user)
-            return {
-                code: 0,
-                data: token,
-                message: "登录成功"
-            }
+            return this.jwtService.sign(user);
         } catch (error) {
-            return {
-                code: 12,
-                message: "账号或密码错误",
-                data: null
-            }
+            
         }
     }
 }

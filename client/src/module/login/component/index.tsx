@@ -12,8 +12,7 @@ export interface LoginAJAXRequest {
 
 class Main extends React.PureComponent<DispatchProp> {
   submit = (value: Store) => {
-    //
-    this.props.dispatch(actions.setCurrentuser(value.username));
+    this.props.dispatch(actions.setCurrentuser(value as Store));
   };
 
   render() {
@@ -26,7 +25,7 @@ class Main extends React.PureComponent<DispatchProp> {
             onFinish={this.submit}
           >
             <Form.Item
-              name="username"
+              name="name"
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
               <Input size="large" placeholder="请输入用户名" />
@@ -42,7 +41,6 @@ class Main extends React.PureComponent<DispatchProp> {
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox>记住我</Checkbox>
             </Form.Item>
-
             <Form.Item>
               <Button type="primary" htmlType="submit"> 登录 </Button>
             </Form.Item>

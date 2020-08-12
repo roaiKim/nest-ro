@@ -65,9 +65,9 @@ export class UserService {
     return "ok";
   }
 
-  async getUser(name: string): Promise<UserEntity[]> {
-    // const user = await this.usersRepository.findOne({name: Like(`%${name}%`)});
-    const user = await this.usersRepository.find({where: [{name: Like(`%luo%`)}, {id: Like(`%4329%`)}]});
+  async getUser(name: string): Promise<UserEntity> {
+    const user = await this.usersRepository.findOne({name: Like(`%${name}%`)});
+    // const user = await this.usersRepository.find({where: [{name: Like(`%luo%`)}, {id: Like(`%4329%`)}]});
     if (!user) {
       throw new HttpException({
         message: '',

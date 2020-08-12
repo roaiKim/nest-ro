@@ -17,20 +17,22 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Req() request: Request & {user: UserEntity}): Promise<RoResponse<any>> {
+  async login(@Req() request: Request & {user: UserEntity}, @Res() response: Response): Promise<any> {
     const {user} = request;
     const {name, id} = user;
-    return this.authService.login({name, userId: id})
+    const token = this.authService.login({name, userId: id})
+    response.cookie('token', token, { maxAge: 432000000, httpOnly: true })
+    return response.json({code: 0, message: "OK",data: user});
   }
 
   // @UseGuards(UserRole)
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
-  async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {
+  async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity>> {
     const user = await this.userService.getUser(request.name)
     console.log("--getUsessr-1->", user)
-    return {code: 0, message: "OK",data: {...user}};
+    return {code: 0, message: "OK",data: user};
   }
 
   @UseGuards(JwtAuthGuard)
