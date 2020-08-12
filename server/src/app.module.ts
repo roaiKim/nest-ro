@@ -16,7 +16,7 @@ import { join } from 'path';
       inject: [ConfigService],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'view', 'dist'),
+      rootPath: join(__dirname, '../', 'client'),
       exclude: ['/api*']
     }),
     UserModule,

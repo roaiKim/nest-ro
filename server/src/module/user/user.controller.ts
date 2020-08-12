@@ -9,6 +9,7 @@ import { AuthService } from 'module/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { JwtUserToken } from 'module/auth/auth.type';
+import { join } from 'path';
 
 @Controller('user')
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
   @Get('get')
   async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity[]>> {
     const user = await this.userService.getUser(request.name)
-    console.log("--getUser-->", user)
+    console.log("--getUsessr-1->", user)
     return {code: 0, message: "OK",data: {...user}};
   }
 

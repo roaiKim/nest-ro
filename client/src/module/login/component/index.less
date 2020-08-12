@@ -1,0 +1,39 @@
+.ro-login-wrap-bg {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.ro-login-wrap {
+  width: 460px;
+  padding: 30px;
+  transform: translate(-50%, -50%);
+  position: relative;
+  top: 45%;
+  left: 50%;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 6px 1px rgba(16, 17, 20, 0.2);
+
+  .ant-form {
+    .ant-row.ant-form-item:last-child {
+      margin-bottom: 0;
+
+      .ant-btn.ant-btn-primary {
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+      }
+    }
+
+    .ant-row.ant-form-item:nth-of-type(3) {
+      margin-bottom: 18px;
+    }
+
+    .ant-input-affix-wrapper,
+    .ant-input {
+      border-radius: 8px;
+    }
+  }
+}

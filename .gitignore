@@ -35,4 +35,6 @@ lerna-debug.log*
 src/config/db.ts
 
 # user DIY
-view
+
+client/dist
+public
