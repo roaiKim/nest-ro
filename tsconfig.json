@@ -9,8 +9,8 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
-    "outDir": "./public/server",
-    "baseUrl": "server/src",
+    "outDir": "./public/service",
+    "baseUrl": "service/src",
     "incremental": true
   }
 }

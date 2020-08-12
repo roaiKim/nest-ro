@@ -35,6 +35,6 @@ lerna-debug.log*
 src/config/db.ts
 
 # user DIY
-
+service/src/config/db.ts
 client/dist
 public
