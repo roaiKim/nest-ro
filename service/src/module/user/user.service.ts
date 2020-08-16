@@ -15,7 +15,7 @@ export class UserService {
   async getUserList(quest: UserGetUserRequest): Promise<[UserEntity[], number]> {
     const user = await this.usersRepository.findAndCount({
       take: 2,
-      skip: 20
+      skip: 2
     });
     // console.log("user", user)
     return user;
@@ -31,7 +31,7 @@ export class UserService {
       throw new HttpException({
         message: '',
         error: '用户已注册',
-        code: 1234
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     await this.usersRepository.save({name, password});

@@ -1,11 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { CustomException } from './filter/exception.filter';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix("api");
-  app.use(cookieParser());
+
+  app.setGlobalPrefix("api"); // 全局路由前缀
+
+  app.use(cookieParser()); // 使用cookie中间件
+  
+  app.useGlobalFilters(new CustomException()); // 启用全局异常过滤器
+
   await app.listen(3000);
 }
 bootstrap();

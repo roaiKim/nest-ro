@@ -10,7 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         super({
             usernameField: 'name',
             passwordField: 'password',
-          })
+        })
     }
 
     validate(name: string, password: string): Promise<UserEntity> {

@@ -35,7 +35,7 @@ export class UserController {
     return {code: 0, message: "OK",data: user};
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('getuserlist')
   async getUserList(@Query() request: UserGetUserRequest): Promise<RoResponse<PageLimitResponse<UserEntity>>> {
     const [list, totalRecord] = await this.userService.getUserList(request)
