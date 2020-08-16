@@ -9,7 +9,6 @@ export class CustomException implements ExceptionFilter{
 
         if (exception instanceof HttpException) {
             const exceptionBody = exception.getResponse()
-            console.log("request", request.body);
             if (exceptionBody.hasOwnProperty("code")) {
                 const exceptionResponse = typeof exceptionBody === "string" ? {
                     message: exceptionBody,
