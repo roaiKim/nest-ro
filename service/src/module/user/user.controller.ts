@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
@@ -13,14 +13,15 @@ import { join } from 'path';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly authService: AuthService) {}
+  constructor(private readonly userService: UserService,private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Req() request: Request & {user: UserEntity}, @Res() response: Response): Promise<any> {
-    const {user} = request;
-    const {name, id} = user;
+  async login(@Body("name") requestName: string, @Body("password") password: string, @Res() response: Response): Promise<any> {
+    const user = await this.userService.login(requestName, password)
+    const {name, id} = user
     const token = this.authService.login({name, userId: id})
+    console.log("srt", token);
     response.cookie('token', token, { maxAge: 432000000, httpOnly: true })
     return response.json({code: 0, message: "OK",data: user});
   }

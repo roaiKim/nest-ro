@@ -1,15 +1,17 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, forwardRef, Inject } from '@nestjs/common';
 import { UserGetUserRequest } from './type';
 import { Repository, Connection, getRepository, Like } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthService } from 'module/auth/auth.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
-    private connection: Connection
+    private connection: Connection,
+    @Inject(forwardRef(() => AuthService)) private readonly authService: AuthService,
   ){}
 
   async getUserList(quest: UserGetUserRequest): Promise<[UserEntity[], number]> {
@@ -43,7 +45,8 @@ export class UserService {
     if (!user) {
       throw new HttpException({
         message: '',
-        error: '用户不存在'
+        error: '用户不存在',
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     // console.log("deteleUser", user)
@@ -57,7 +60,8 @@ export class UserService {
     if (!user) {
       throw new HttpException({
         message: '',
-        error: '用户不存在'
+        error: '用户不存在',
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     // console.log("deteleUser", user)
@@ -71,7 +75,8 @@ export class UserService {
     if (!user) {
       throw new HttpException({
         message: '',
-        error: '用户不存在'
+        error: '用户不存在',
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     return user;
@@ -82,7 +87,8 @@ export class UserService {
     if (!user) {
       throw new HttpException({
         message: '',
-        error: '用户不存在'
+        error: '用户不存在',
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     return user;
@@ -93,13 +99,22 @@ export class UserService {
     if (!user) {
       throw new HttpException({
         message: '',
-        error: '用户不存在'
+        error: '用户不存在',
+        code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
     return user;
   }
 
   async login(name: string, password: string): Promise<UserEntity> {
-    return await this.usersRepository.findOne({where: {name, password}});
+    const user = await this.usersRepository.findOne({where: {name, password}});
+    if (!user) {
+      throw new HttpException({
+        message: '',
+        error: '用户名或密码不正确!',
+        code: 2323
+      }, HttpStatus.BAD_REQUEST)
+    }
+    return user;
   }
 }
