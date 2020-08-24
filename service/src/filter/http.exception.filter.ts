@@ -2,7 +2,7 @@ import { ExceptionFilter, ArgumentsHost, HttpException } from "@nestjs/common";
 
 
 export class CustomException implements ExceptionFilter{
-    catch(exception: any, host: ArgumentsHost) {
+    catch(exception: any, host: ArgumentsHost): JSON {
         const ctx = host.switchToHttp();
         const request = ctx.getRequest();
         const response = ctx.getResponse();

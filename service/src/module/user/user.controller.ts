@@ -78,7 +78,7 @@ export class UserController {
   // 通过jwt获取user
   @UseGuards(JwtAuthGuard)
   @Get('check')
-  async getCurrentUserByCookie(@Req() request: Request & {user: JwtUserToken}): Promise<RoResponse<UserEntity>> {
+  async getUserByCookie(@Req() request: Request & {user: JwtUserToken}): Promise<RoResponse<UserEntity>> {
     const {user} = request;
     const {userId=""} = user;
     const userInfo = await this.userService.getUserByCookie(userId)

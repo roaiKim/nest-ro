@@ -15,7 +15,7 @@ class MainModule extends Module<State> {
 
   @Loading('mask')
   async fetchCurrentuser() {
-    const response = await MainService.fetchCurrentUser({ name: 's', password: 'ro' });
+    const response = await MainService.fetchCurrentUser();
     this.setState({ user: response.data.name });
   }
 

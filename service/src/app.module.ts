@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileModule } from 'module/fileUpload/file.module';
 import { HttpRoModule } from 'module/http/http.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ChatEventsModule } from 'module/webSocket/chat.module';
 import { join } from 'path';
 
 @Module({
@@ -21,13 +22,8 @@ import { join } from 'path';
     }),
     UserModule,
     FileModule,
-    HttpRoModule
+    HttpRoModule,
+    ChatEventsModule
   ]
 })
 export class AppModule {}
-
-/* ConfigModule.load(resolve(__dirname, 'config', '**!(*.d).{ts,js}')),
-TypeOrmModule.forRootAsync({
-  useFactory: (config: ConfigService) => config.get('db'),
-  inject: [ConfigService],
-}), */

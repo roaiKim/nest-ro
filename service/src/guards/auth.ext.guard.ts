@@ -14,7 +14,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (err || !user) {
             throw err || new HttpException({
                 error: "未登录或登录过期",
-                message: info.toString()
+                message: info.toString(),
+                code: 10000
             }, HttpStatus.BAD_REQUEST);
         }
         return user;
