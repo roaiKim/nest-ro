@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject, Next, Ip, Session } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
@@ -11,7 +11,8 @@ import { Request } from 'express';
 import { JwtUserToken } from 'module/auth/auth.type';
 import { join } from 'path';
 
-@Controller('user')
+// @Controller({path: 'user', host: "12"}) // 
+@Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService,private readonly authService: AuthService) {}
 
@@ -30,9 +31,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
-  async getUser(@Query() request: UserGetUserRequest): Promise<RoResponse<UserEntity>> {
+  async getUser(@Query() request: UserGetUserRequest, @Session() ip: string): Promise<RoResponse<UserEntity>> {
     const user = await this.userService.getUser(request.name)
-    console.log("--getUsessr-1->", user)
+    console.log("--nest-->", typeof ip, ip)
     return {code: 0, message: "OK",data: user};
   }
 
@@ -62,8 +63,9 @@ export class UserController {
     return {code: 0, message: "OK",data: result};
   }
 
-  @Post('change/:id')
+  @Post('change/id+')
   changePassword(@Body() password: string): RoResponse<UserGetUserResponse> {
+    console.log("response", password)
     return {code: 0, message: "OK",data: { name: password}};
   }
 
@@ -73,6 +75,14 @@ export class UserController {
     // console.log("response", response)
     response.redirect("https://www.baidu.com")
     // return response.json({data: "str" });
+  }
+
+  @Get('redirect')
+  @Redirect('', 302)
+  redirectLogin2(@Res() response: Response): any {
+    // console.log("response", response)
+    // 动态确定重定向的url地址 / Redirect 修饰的方法返回下列的对象会覆盖Redirect中的url和code
+    return {url: "https://www.baidu.com", statusCode: 302}
   }
 
   // 通过jwt获取user

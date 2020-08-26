@@ -13,7 +13,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new CustomException()); // 启用全局异常过滤器
 
-  app.useWebSocketAdapter(new WsAdapter(app));
+  app.useWebSocketAdapter(new WsAdapter(app)); // 启动websocket Adapter
 
   await app.listen(3000);
 }
