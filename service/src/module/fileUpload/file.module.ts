@@ -5,7 +5,7 @@ import { ConfigService } from "nestjs-config";
 
 @Module({
     imports: [
-        MulterModule/* .registerAsync({
+        /* MulterModule.registerAsync({
             useFactory: (config: ConfigService) => config.get("file"),
             inject: [ConfigService]
         }) */

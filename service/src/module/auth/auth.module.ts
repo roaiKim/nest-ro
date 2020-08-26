@@ -10,12 +10,11 @@ import { UserService } from "module/user/user.service";
 
 @Module({
     imports: [
-        forwardRef(() => UserModule),
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: {
-                expiresIn: '1h'
+                expiresIn: '5d'
             }
         })
     ],

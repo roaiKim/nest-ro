@@ -1,7 +1,6 @@
 webpack
 src/core
 .eslintrc.js
-service
 core
 build
 dist

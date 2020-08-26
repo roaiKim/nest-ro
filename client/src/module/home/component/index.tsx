@@ -1,8 +1,51 @@
 import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { Store } from 'antd/lib/form/interface';
+// import io from 'socket.io-client';
 
 class Main extends React.PureComponent {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  constructor(props: any) {
+    super(props);
+    // const socket = io.connect(`/?userId=${2}`);
+    /* socket.onopen = function () {
+      socket.send(
+        JSON.stringify({
+          event: 'events',
+          data: 'test',
+        }),
+      );
+      socket.onmessage = function (data: any) {
+        console.log(data);
+      };
+    }; */
+  }
+
+  submit = (value: Store) => {
+    // console.log('sss', value);
+  };
+
   render() {
-    return <div>404</div>;
+    return (
+      <div className="ro-login-wrap">
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={this.submit}
+        >
+          <Form.Item
+            name="name"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Input size="large" placeholder="请输入用户名" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit"> 登录 </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    );
   }
 }
 
