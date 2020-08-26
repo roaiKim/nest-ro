@@ -9,12 +9,9 @@ export class CustomException implements ExceptionFilter{
 
         if (exception instanceof HttpException) {
             const exceptionBody = exception.getResponse()
-            if (exceptionBody.hasOwnProperty("code")) {
-                const exceptionResponse = typeof exceptionBody === "string" ? {
-                    message: exceptionBody,
-                    timeISO: new Date().toISOString(),
-                    path: request.url,
-                } : {
+            // 只会转化含有code的自定义的 HttpException 而且消息体为json对象
+            if (exceptionBody.hasOwnProperty("code") && typeof exceptionBody === "object") {
+                const exceptionResponse =  {
                     ...exceptionBody,
                     timeISO: new Date().toISOString(),
                     path: request.url,
