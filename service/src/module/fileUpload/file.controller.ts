@@ -28,7 +28,7 @@ export class FileController {
         console.log("filesssll", file)
         const origin = file.originalname.split('.');
         const name = `${origin.slice(0, -1).join("")}`;
-        const uploadPath = path.join(__dirname, `../../../uploads/${new Date().toISOString().substring(0, 10)}`, encodeURIComponent(name))
+        const uploadPath = path.join(__dirname, `../../../../uploads/${new Date().toISOString().substring(0, 10)}`, encodeURIComponent(name))
         zip.uncompress(file.buffer, uploadPath).then(() => {
             console.error("success!");
             rmdir(path.join(uploadPath, "__MACOSX"), (err) => {
