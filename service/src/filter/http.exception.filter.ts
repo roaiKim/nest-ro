@@ -19,7 +19,16 @@ export class CustomException implements ExceptionFilter{
                 return response.status(200).json(exceptionResponse)
             }
         }
-
-        return response.status(exception.getStatus()).json(exception.getResponse())
+        // 有些异常没有 getStatus() 或 getResponse()
+        try {
+            return response.status(exception.getStatus()).json(exception.getResponse())
+        } catch {
+            return response.status(200).json({
+                message: exception.toString(),
+                code: -1,
+                timeISO: new Date().toISOString(),
+                path: request.url
+            })
+        }
     }
 }

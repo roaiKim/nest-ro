@@ -46,8 +46,8 @@ export class UserController {
 
   @SetMetadata("roles", ["admin", "ddd"])
   @Post('create')
-  async createUser(@Body() request: UserGetUserRequest): Promise<RoResponse<string>> {
-    const result = await this.userService.createUser(request.name, request.password)
+  async createUser(@Body() request: UserGetUserRequest[]): Promise<RoResponse<string>> {
+    const result = await this.userService.createUser(request)
     return {code: 0, message: "OK",data: result};
   }
 
@@ -63,8 +63,8 @@ export class UserController {
     return {code: 0, message: "OK",data: result};
   }
 
-  @Post('change/id+')
-  changePassword(@Body() password: string): RoResponse<UserGetUserResponse> {
+  @Post('change/:id')
+  changePassword(@Param('id') password: string): RoResponse<UserGetUserResponse> {
     console.log("response", password)
     return {code: 0, message: "OK",data: { name: password}};
   }

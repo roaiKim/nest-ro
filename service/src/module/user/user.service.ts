@@ -19,53 +19,44 @@ export class UserService {
       take: 2,
       skip: 2
     });
-    // console.log("user", user)
     return user;
   }
 
-  getRoles(quest: string): boolean {
-    return !!quest;
-  }
-
-  async createUser(name: string, password: string): Promise<string> {
-    const user = await this.usersRepository.findOne({where: {name}, withDeleted: true});
-    if (user) {
+  async createUser(user: UserGetUserRequest[]): Promise<string> {
+    try {
+      await this.usersRepository.insert(user);
+      return "ok";
+    } catch (exception) {
       throw new HttpException({
-        message: '',
-        error: '用户已注册',
+        message: `${((exception.sqlMessage || "").match(/(?<='|").*?(?='|")/) || [])[0]} 已存在`,
+        error: exception.toString(),
         code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
-    await this.usersRepository.save({name, password});
-    return "ok";
   }
 
   async updateUser(id: string, name: string): Promise<string> {
-    const user = await this.usersRepository.findOne({where: {id}});
-    if (!user) {
+    // 直接用语句更新 不需要先查找再更新
+    const result = await this.usersRepository.update({id}, {name});
+    if (!result.affected) {
       throw new HttpException({
         message: '',
         error: '用户不存在',
         code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
-    // console.log("deteleUser", user)
-    user.name = name;
-    await this.usersRepository.update(id, user);
     return "ok";
   }
 
   async deteleUser(name: string): Promise<string> {
-    const user = await this.usersRepository.findOne({where: {name}});
-    if (!user) {
+    const user = await this.usersRepository.delete({name})
+    if (!user.affected) {
       throw new HttpException({
         message: '',
         error: '用户不存在',
         code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
-    // console.log("deteleUser", user)
-    await this.usersRepository.softDelete({name})
     return "ok";
   }
 
