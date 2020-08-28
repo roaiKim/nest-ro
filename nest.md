@@ -97,6 +97,20 @@ export class HttpExceptionFilter implements ExceptionFilter {
 > 1 转化: 将输入的数据转化成所需要的数据输出
 > 2 验证: 对输入的数据进行验证,成功就继续传递,失败着抛出异常,由全局过滤器处理
 
+// TODO: 未完待续
 
 
 
+### 守卫
+> 守卫是一个使用 @Injectable() 装饰器的类, 它的功能是是守卫路由的对象; 它在每一个中间件之后执行,在任何的拦截器和管道之前执行
+
+```typescript
+@Injectable()
+export class RolesGuard implements CanActivate {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    return true;
+  }
+}
+```
