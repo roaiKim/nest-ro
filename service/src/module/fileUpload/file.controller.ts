@@ -5,6 +5,7 @@ import { UploadFile } from "./file.type";
 import { zip } from "compressing";
 import { rmdir } from "fs";
 import * as path from 'path';
+import client from 'ali/ali-oss';
 
 @Controller("file")
 export class FileController {
@@ -37,6 +38,16 @@ export class FileController {
         }).catch(err => {
             console.error(err);
         });
+        return {code: 0, message: "ok", data: null}
+    }
+
+    @Post("uploadoss")
+    @UseInterceptors(FileInterceptor("file"))
+    uploadToAliOss(@UploadedFile() file: UploadFile): RoResponse<string> {
+        console.log("filesssll", file)
+        client.put(file.originalname, file.buffer).then((result) => {
+            console.error("upload-result", result);
+        }).catch()
         return {code: 0, message: "ok", data: null}
     }
 }
