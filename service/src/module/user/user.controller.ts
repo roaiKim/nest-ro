@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject, Next, Ip, Session } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject, Next, Ip, Session, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
@@ -10,6 +10,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { JwtUserToken } from 'module/auth/auth.type';
 import { join } from 'path';
+import TransformInterceptor from 'interceptors/transformInterceptor';
 
 // @Controller({path: 'user', host: "12"}) // 
 @Controller("user")
@@ -28,13 +29,14 @@ export class UserController {
   }
 
   // @UseGuards(UserRole)
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @SetMetadata("roles", "admin")
   @Get('get')
-  async getUser(@Query() request: UserGetUserRequest, @Session() ip: string): Promise<RoResponse<UserEntity>> {
+  @UseInterceptors(TransformInterceptor)
+  async getUser(@Query() request: UserGetUserRequest): Promise<UserEntity> {
     const user = await this.userService.getUser(request.name)
-    console.log("--nest-->", typeof ip, ip)
-    return {code: 0, message: "OK",data: user};
+    console.log("--nest-->")
+    return user;
   }
 
   // @UseGuards(JwtAuthGuard)
