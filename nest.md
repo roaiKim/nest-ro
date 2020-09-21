@@ -114,3 +114,20 @@ export class RolesGuard implements CanActivate {
   }
 }
 ```
+
+### 拦截器
+> 拦截器具有函数执行前后的添加一些逻辑 可以转化函数返回的结果
+```typescript
+class TransformInterceptor implements NestInterceptor {
+    intercept (content: ExecutionContext, next: CallHandler): Observable<any> {
+        return next.handle().pipe(map(data => ({
+            "code": 0,
+            "message": "OK",
+            "data": data || null
+        })))
+    }
+}
+
+//
+@UseInterceptors(TransformInterceptor)
+```
