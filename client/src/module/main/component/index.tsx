@@ -28,7 +28,8 @@ class Component extends React.PureComponent<Props> {
           {(showGlobalLoading || showMaskLoading) && <LoadingComponent type={showMaskLoading} />}
           <Switch>
             <Route path="/login" component={login} />
-            <Route component={currentUser ? MainLayout : login} />
+            {/* <Route component={currentUser ? MainLayout : login} /> */}
+            <Route component={MainLayout} />
           </Switch>
         </main>
       </ConfigProvider>

@@ -17,10 +17,10 @@ import { join } from 'path';
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
     }),
-    ServeStaticModule.forRoot({
+    /* ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../', 'client'),
       exclude: ['/api*']
-    }),
+    }), */
     UserModule,
     FileModule,
     HttpRoModule,

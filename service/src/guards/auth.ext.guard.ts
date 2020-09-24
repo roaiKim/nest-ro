@@ -21,3 +21,19 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         return user;
     }
 }
+
+@Injectable()
+export class redirctAuthGuard extends AuthGuard('jwt') {
+    canActivate(context: ExecutionContext): any {
+        return super.canActivate(context);
+    }
+
+    handleRequest(err: unknown, user: unknown, info: Record<string, unknown>, context: ExecutionContext): any {
+        // console.log("ol", err, user, info)
+       
+        if (err || !user) {
+            return false
+        }
+        return user;
+    }
+}

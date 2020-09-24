@@ -21,4 +21,8 @@ export class ModuleLoader {
   static system() {
     return import(/* webpackChunkName: "system" */ 'module/system-management');
   }
+
+  static upload() {
+    return import(/* webpackChunkName: "upload" */ 'module/upload');
+  }
 }

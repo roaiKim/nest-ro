@@ -9,7 +9,7 @@ export class TimingService {
         console.log("tast")
     } */
 
-    @Cron(CronExpression.EVERY_10_SECONDS, {name: "timingCore2"})
+    // @Cron(CronExpression.EVERY_10_SECONDS, {name: "timingCore2"})
     core2(): void{
         // 内部列举的枚举
         console.log("tast2")

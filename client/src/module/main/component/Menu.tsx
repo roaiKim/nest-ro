@@ -27,10 +27,13 @@ class MenuComponent extends React.PureComponent<Props> {
           theme="dark"
         >
           <Menu.Item key="user-management" icon={<UserOutlined />}>
-            <Link to="/user-management">用户管理</Link>
+            <Link to="/user-management">宝贝宝贝</Link>
           </Menu.Item>
           <Menu.Item key="system-management" icon={<DesktopOutlined />}>
-            <Link to="/system-management">系统接入</Link>
+            <Link to="/system-management">啊啊啊</Link>
+          </Menu.Item>
+          <Menu.Item key="up-load" icon={<DesktopOutlined />}>
+            <Link to="/up-load">文件上传</Link>
           </Menu.Item>
         </Menu>
       </div>

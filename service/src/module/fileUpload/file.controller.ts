@@ -44,9 +44,9 @@ export class FileController {
     @Post("uploadoss")
     @UseInterceptors(FileInterceptor("file"))
     uploadToAliOss(@UploadedFile() file: UploadFile): RoResponse<string> {
-        console.log("filesssll", file)
-        client.put(file.originalname, file.buffer).then((result) => {
-            console.error("upload-result", result);
+        // console.log("filesssll", file)
+        client.put(file.originalname, file.buffer, {"headers": {'Content-Type': 'image/jpg'}}).then((result) => {
+            // console.error("upload-result", result);
         }).catch()
         return {code: 0, message: "ok", data: null}
     }

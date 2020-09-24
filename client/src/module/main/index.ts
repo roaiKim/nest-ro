@@ -16,7 +16,13 @@ class MainModule extends Module<State> {
   @Loading('mask')
   async fetchCurrentuser() {
     const response = await MainService.fetchCurrentUser();
-    this.setState({ user: response.data.name });
+    console.log('response', response);
+    /* if (response.code === 0) {
+      this.setState({ user: response.data.name });
+      // this.setHistory('/');
+    } else {
+      this.setHistory('/login');
+    } */
   }
 
   @Loading('mask')

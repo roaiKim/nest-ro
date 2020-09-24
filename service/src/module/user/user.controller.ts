@@ -1,8 +1,8 @@
-import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject, Next, Ip, Session, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, ParseIntPipe, Redirect, Req,UseGuards, Delete, Res, SetMetadata, forwardRef, Inject, Next, Ip, Session, UseInterceptors, Render } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RoResponse, UserGetUserResponse, UserGetUserRequest, UserUpdateUserRequest, PageLimitResponse } from './type';
 import { UserRole } from 'guards/user.roles.guard';
-import { JwtAuthGuard } from 'guards/auth.ext.guard';
+import { JwtAuthGuard, redirctAuthGuard } from 'guards/auth.ext.guard';
 import { UserEntity } from './user.entity';
 import { Response } from 'express'
 import { AuthService } from 'module/auth/auth.service';
@@ -19,13 +19,14 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
+  @Redirect('/', 302)
   async login(@Body("name") requestName: string, @Body("password") password: string, @Res() response: Response): Promise<any> {
     const user = await this.userService.login(requestName, password)
     const {name, id} = user
     const token = this.authService.login({name, userId: id})
     console.log("srt", token);
     response.cookie('token', token, { maxAge: 432000000, httpOnly: true })
-    return response.json({code: 0, message: "OK",data: user});
+    // return response.json({code: 0, message: "OK",data: user})
   }
 
   // @UseGuards(UserRole)
@@ -75,11 +76,11 @@ export class UserController {
   // @Redirect('https://www.baidu.com', 302)
   redirectLogin(@Res() response: Response): any {
     // console.log("response", response)
-    response.redirect("https://www.baidu.com")
+    response.redirect("/")
     // return response.json({data: "str" });
   }
 
-  @Get('redirect')
+  // @Get('redirect')
   @Redirect('', 302)
   redirectLogin2(@Res() response: Response): any {
     // console.log("response", response)
