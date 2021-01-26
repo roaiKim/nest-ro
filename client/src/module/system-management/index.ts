@@ -1,8 +1,8 @@
 import { Module, register, Lifecycle, Loading } from 'react-basc';
 import { SystemService } from 'service/api/SystemService';
 import { message } from 'antd';
-import Main from './component';
 import { WithConfirm } from 'util/decorator';
+import Main from './component';
 import { State } from './type';
 
 const initialState: State = {

@@ -21,15 +21,14 @@ const login = async(ModuleLoader.login, 'MainComponent');
 class Component extends React.PureComponent<Props> {
   render() {
     const { showGlobalLoading, currentUser, showMaskLoading } = this.props;
-
     return (
       <ConfigProvider input={{ autoComplete: 'off' }}>
         <main>
           {(showGlobalLoading || showMaskLoading) && <LoadingComponent type={showMaskLoading} />}
           <Switch>
             <Route path="/login" component={login} />
-            {/* <Route component={currentUser ? MainLayout : login} /> */}
-            <Route component={MainLayout} />
+            <Route component={currentUser ? MainLayout : login} />
+            {/* <Route component={MainLayout} /> */}
           </Switch>
         </main>
       </ConfigProvider>

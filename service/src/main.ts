@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { CustomException } from './filter/http.exception.filter';
 import * as cookieParser from 'cookie-parser';
 import { WsAdapter } from '@nestjs/platform-ws';
+import * as history from 'connect-history-api-fallback'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
   app.useGlobalFilters(new CustomException()); // 启用全局异常过滤器
 
   app.useWebSocketAdapter(new WsAdapter(app)); // 启动websocket Adapter
+
+  // app.use(history()); // history-api-fallback
 
   await app.listen(3000);
 

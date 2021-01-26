@@ -1,34 +1,48 @@
 import { Lifecycle, Loading, Module, register } from 'react-basc';
 import { MainService } from 'service/api/MainService';
+import { Location } from 'history';
+import { createErrorMessage } from 'util/ui/message';
 import Main from './component';
 import { State } from './type';
 
 const initialState: State = {
   user: null,
+  pathname: null,
 };
 
 class MainModule extends Module<State> {
   @Lifecycle()
   onRegister() {
-    this.fetchCurrentuser();
+    this.fetchCurrentUser();
+  }
+
+  @Lifecycle()
+  onRender(routeParameters: {}, location: Location) {
+    this.setState({ pathname: location.pathname || '' });
   }
 
   @Loading('mask')
-  async fetchCurrentuser() {
-    const response = await MainService.fetchCurrentUser();
-    console.log('response', response);
-    /* if (response.code === 0) {
+  async fetchCurrentUser() {
+    const response = await MainService.fetchLoginUser();
+    if (response.code === 0) {
       this.setState({ user: response.data.name });
-      // this.setHistory('/');
+      if (this.state.pathname === '/login') {
+        this.setHistory('/');
+      }
     } else {
       this.setHistory('/login');
-    } */
+    }
   }
 
-  @Loading('mask')
-  async setCurrentuser(request: any) {
+  @Loading()
+  async setCurrentUser(request: any) {
     const response = await MainService.login(request);
-    this.setState({ user: response.data.name });
+    if (response.code === 0) {
+      this.setState({ user: response.data.name });
+      this.setHistory('/');
+    } else {
+      createErrorMessage(response.message || '登录失败');
+    }
   }
 }
 

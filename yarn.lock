@@ -9506,10 +9506,10 @@ rc-virtual-list@^1.1.0, rc-virtual-list@^1.1.2:
     raf "^3.4.1"
     rc-util "^5.0.0"
 
-react-basc@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-basc/-/react-basc-1.0.3.tgz#06bb42654876e362565b9e4176480c0842540b62"
-  integrity sha512-urW314rcJg/R+Y8fDIxefqKAxdu/wHAqV1DUCX7Arm+jB9Y1UMWxCSuH2FaIAwjQUQezCFRtvh0FdFK9Yis1bA==
+react-basc@1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-basc/-/react-basc-1.0.6.tgz#ba4f77ad5fe500369d36ded77ccb1edc9c34bffc"
+  integrity sha512-daE+GdcUjaplEquNRmgjwUdiA1oAAz6YroDlBuu1gp+DEZ/fRPd4obDFaaRiln1v85RPbyTbXnPIG3UDueymOg==
   dependencies:
     "@babel/polyfill" "7.4.4"
     "@types/node" "13.9.1"

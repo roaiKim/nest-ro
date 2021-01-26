@@ -1,9 +1,14 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-// import io from 'socket.io-client';
+import { connect, DispatchProp } from 'react-redux';
+import { actions } from 'module/home';
 
-class Main extends React.PureComponent {
+interface Props extends DispatchProp {
+  d: string
+}
+
+class Main extends React.PureComponent<Props> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: any) {
     super(props);
@@ -23,6 +28,7 @@ class Main extends React.PureComponent {
 
   submit = (value: Store) => {
     // console.log('sss', value);
+    this.props.dispatch(actions.skl());
   };
 
   render() {
@@ -49,4 +55,4 @@ class Main extends React.PureComponent {
   }
 }
 
-export default Main;
+export default connect()(Main);

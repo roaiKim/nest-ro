@@ -6,7 +6,7 @@ export class MainService {
     return ajax('POST', '/api/user/login', request);
   }
 
-  static fetchCurrentUser(): Promise<HomeAPIResponse<CurrentUserAPIResponse>> {
+  static fetchLoginUser(): Promise<HomeAPIResponse<CurrentUserAPIResponse>> {
     return ajax('GET', '/api/user/check', {});
   }
 

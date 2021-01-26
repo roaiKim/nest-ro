@@ -8,6 +8,7 @@ import { MainComponent as System } from 'module/system-management';
 import { MainComponent as NoFound } from 'module/404';
 import { MainComponent as Upload } from 'module/upload'; */
 import MenuComponent from './Menu';
+import Circle from './circle';
 
 const User = async(ModuleLoader.user, 'MainComponent');
 const System = async(ModuleLoader.system, 'MainComponent');
@@ -31,6 +32,7 @@ class MainLayout extends React.PureComponent {
             <Route component={NoFound} />
           </Switch>
         </section>
+        <Circle />
       </section>
     );
   }

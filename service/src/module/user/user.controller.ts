@@ -19,14 +19,12 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  @Redirect('/', 302)
   async login(@Body("name") requestName: string, @Body("password") password: string, @Res() response: Response): Promise<any> {
     const user = await this.userService.login(requestName, password)
     const {name, id} = user
     const token = this.authService.login({name, userId: id})
-    console.log("srt", token);
     response.cookie('token', token, { maxAge: 432000000, httpOnly: true })
-    // return response.json({code: 0, message: "OK",data: user})
+    return response.json({code: 0, message: "OK",data: user})
   }
 
   // @UseGuards(UserRole)
@@ -73,11 +71,9 @@ export class UserController {
   }
 
   @Get('redirect')
-  // @Redirect('https://www.baidu.com', 302)
-  redirectLogin(@Res() response: Response): any {
-    // console.log("response", response)
-    response.redirect("/")
-    // return response.json({data: "str" });
+  @Redirect('/login', 302)
+  redirectLogin(@Res() response: Response): void {
+    //
   }
 
   // @Get('redirect')
@@ -94,6 +90,7 @@ export class UserController {
   async getUserByCookie(@Req() request: Request & {user: JwtUserToken}): Promise<RoResponse<UserEntity>> {
     const {user} = request;
     const {userId=""} = user;
+    console.log("check");
     const userInfo = await this.userService.getUserByCookie(userId)
     return {code: 0, message: "OK",data: userInfo};
   }

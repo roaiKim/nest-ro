@@ -12,12 +12,16 @@ export interface LoginAJAXRequest {
 
 class Main extends React.PureComponent<DispatchProp> {
   submit = (value: Store) => {
-    this.props.dispatch(actions.setCurrentuser(value as Store));
+    this.props.dispatch(actions.setCurrentUser(value as Store));
   };
 
   render() {
     return (
       <div className="ro-login-wrap-bg">
+        <video className="ro-login-vider-bg" autoPlay muted loop>
+          <source src="https://public-upsky.oss-cn-shenzhen.aliyuncs.com/bg.mp4" type="video/mp4" />
+          <track default kind="captions" srcLang="en" />
+        </video>
         <div className="ro-login-wrap">
           <Form
             name="basic"

@@ -22,9 +22,10 @@ class MenuComponent extends React.PureComponent<Props> {
     return (
       <div style={{ width: 256 }}>
         <Menu
-          defaultSelectedKeys={[this.calculateMenuKeyByURL()]}
+          // defaultSelectedKeys={[this.calculateMenuKeyByURL()]}
           mode="inline"
           theme="dark"
+          selectedKeys={[this.calculateMenuKeyByURL()]}
         >
           <Menu.Item key="user-management" icon={<UserOutlined />}>
             <Link to="/user-management">宝贝宝贝</Link>

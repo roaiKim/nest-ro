@@ -101,8 +101,8 @@ export class UserService {
     const user = await this.usersRepository.findOne({where: {name, password}});
     if (!user) {
       throw new HttpException({
-        message: '',
-        error: '用户名或密码不正确!',
+        message: '用户名或密码不正确!',
+        error: '',
         code: 2323
       }, HttpStatus.BAD_REQUEST)
     }

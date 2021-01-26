@@ -6,7 +6,11 @@ const initialState: State = {
   type: undefined,
 };
 
-class MainModule extends Module<State, RouteParam> {}
+class MainModule extends Module<State, RouteParam> {
+  skl() {
+    this.setHistory('/up-load');
+  }
+}
 
 const module = register(new MainModule('home', initialState));
 export const actions = module.getActions();
