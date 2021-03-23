@@ -9,6 +9,7 @@ const StylelintPlugin = require("stylelint-webpack-plugin");
 const TSImportPlugin = require("ts-import-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 
 const config = {
     mode: "production",
@@ -16,7 +17,7 @@ const config = {
     output: {
         path: env.dist,
         filename: "static/js/[name].[chunkhash:8].js",
-        publicPath: "/",
+        publicPath: "/" 
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".less"],
@@ -34,6 +35,13 @@ const config = {
         splitChunks: {
             automaticNameDelimiter: "-",
             maxAsyncRequests: 12,
+            cacheGroups: {
+                commons: {
+                    test: /(react|react-dom)/,
+                    name: 'wawa',
+                    chunks: 'all'
+                }
+            }
         },
         minimizer: [
             new TerserPlugin({
@@ -114,6 +122,7 @@ const config = {
         ],
     },
     plugins: [
+        new AntdDayjsWebpackPlugin(),
         new MiniCSSExtractPlugin({
             filename: "static/css/[name].[contenthash:8].css",
         }),
@@ -122,12 +131,6 @@ const config = {
             tslint: env.tslintConfig,
             useTypescriptIncrementalApi: false,
             workers: ForkTSCheckerPlugin.TWO_CPUS_FREE,
-        }),
-        new StylelintPlugin({
-            configFile: env.stylelintConfig,
-            context: env.src,
-            files: "**/*.less",
-            syntax: "less",
         }),
         new HTMLPlugin({
             template: `${env.src}/index.html`,
@@ -153,7 +156,7 @@ const config = {
         }),
         new webpack.ProgressPlugin({profile: env.profile}),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        // new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin()
     ],
 };
 

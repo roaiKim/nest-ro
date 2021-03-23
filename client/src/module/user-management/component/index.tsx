@@ -10,6 +10,7 @@ import { actions } from 'module/user-management';
 import { Encrypt, Decrypt } from 'util/secret';
 import { DocTitle } from 'util/decorator';
 import AddUserModal from './AddUserModal';
+import DateTest from './Date';
 
 export interface LoginAJAXRequest {
   username: string;
@@ -131,6 +132,8 @@ class Main extends React.PureComponent<Props, State> {
           <Table rowKey="id" columns={this.columns} dataSource={userList?.list} />
         </div>
         {show && <AddUserModal initItem={userItem} closeModal={this.closeModal} />}
+
+        <DateTest/>
       </div>
     );
   }

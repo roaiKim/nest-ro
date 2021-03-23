@@ -9,6 +9,10 @@ import { MainComponent as NoFound } from 'module/404';
 import { MainComponent as Upload } from 'module/upload'; */
 import MenuComponent from './Menu';
 import Circle from './circle';
+import dayjs from 'dayjs';
+
+import 'dayjs/locale/zh-cn'
+dayjs.locale('zh-cn')
 
 const User = async(ModuleLoader.user, 'MainComponent');
 const System = async(ModuleLoader.system, 'MainComponent');

@@ -6,7 +6,7 @@ import Main from './component';
 import { State } from './type';
 
 const initialState: State = {
-  user: null,
+  user: "ro",
   pathname: null,
 };
 
@@ -24,25 +24,25 @@ class MainModule extends Module<State> {
   @Loading('mask')
   async fetchCurrentUser() {
     const response = await MainService.fetchLoginUser();
-    if (response.code === 0) {
+    /* if (response.code === 0) {
       this.setState({ user: response.data.name });
       if (this.state.pathname === '/login') {
         this.setHistory('/');
       }
     } else {
       this.setHistory('/login');
-    }
+    } */
   }
 
   @Loading()
   async setCurrentUser(request: any) {
     const response = await MainService.login(request);
-    if (response.code === 0) {
+    /* if (response.code === 0) {
       this.setState({ user: response.data.name });
       this.setHistory('/');
     } else {
       createErrorMessage(response.message || '登录失败');
-    }
+    } */
   }
 }
 
