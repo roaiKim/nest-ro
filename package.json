@@ -47,7 +47,7 @@
     "ali-oss": "^6.10.0",
     "antd": "^4.14.0",
     "antd-dayjs-webpack-plugin": "^1.0.6",
-    "axios": "0.18.1",
+    "axios": "0.21.1",
     "compressing": "^1.5.1",
     "connect-history-api-fallback": "^1.6.0",
     "connected-react-router": "6.4.0",
