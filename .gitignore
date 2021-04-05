@@ -35,7 +35,7 @@ lerna-debug.log*
 src/config/db.ts
 
 # user DIY
-service/src/config/db.ts
+# service/src/config/db.ts
 service/src/config/**.mysql
 client/dist
 public
