@@ -39,3 +39,5 @@ service/src/config/db.ts
 service/src/config/**.mysql
 client/dist
 public
+
+localfile

@@ -18,13 +18,15 @@ async function bootstrap() {
 
   // app.use(history()); // history-api-fallback
 
+  app.enableCors();
+  
   await app.listen(3000);
-
-  if (process.env.NODE_ENV === "prod") {
-    console.log("rios")
-  }
 }
 
 bootstrap();
+
+if (process.env.NODE_ENV === "dev") {
+    console.log("dev 环境")
+}
 
 console.info("\n程序已启动", "端口为3000\n")
