@@ -35,8 +35,9 @@ class Main extends React.PureComponent {
         ele.style.display = "none";
         ele.href = url;
         ele.download = "xlsx"
+        document.body.appendChild(ele); // 这样做是为了兼容firefox
         ele.click()
-        ele.remove()
+        document.body.removeChild(ele);
     })
   }
 
