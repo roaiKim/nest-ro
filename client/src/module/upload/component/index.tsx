@@ -4,6 +4,7 @@ import { Store } from 'antd/lib/form/interface';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import mime from 'mime';
 
 class Main extends React.PureComponent {
   submit = (value: Store) => {
@@ -23,18 +24,20 @@ class Main extends React.PureComponent {
         test: "test data"    
       },
       responseType: "arraybuffer"
-    }).then(response => {      
-        console.log(response.data)
+    }).then((response) => {      
+        console.log("1", response.data)
+        const extension = mime.getExtension(response.data); 
         const blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          // type: "application/x-msdownload"
+          // type: "application/octet-stream"
         })
-
+        console.log("2", blob, extension)
         const url = URL.createObjectURL(blob);
         const ele = document.createElement("a");
         ele.style.display = "none";
         ele.href = url;
-        ele.download = "xlsx"
+        console.log("2", blob)
+        ele.download = "xlsx"//  + "." + extension
         document.body.appendChild(ele); // 这样做是为了兼容firefox
         ele.click()
         document.body.removeChild(ele);

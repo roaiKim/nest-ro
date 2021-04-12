@@ -106,7 +106,7 @@ const config = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProgressPlugin(),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new BundleAnalyzerPlugin()
+        // new BundleAnalyzerPlugin()
     ],
 };
 

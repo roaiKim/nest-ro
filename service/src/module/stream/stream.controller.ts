@@ -10,9 +10,9 @@ export class StreamController {
 
     @Get('download')
     async login(@Res() response: Response): Promise<any> {
-        response.header("Content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") 
+        // response.header("Content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") 
         // response.header("Content-type", "application/x-msdownload") 
-        fs.readFile(join(__dirname, "../../../../localfile", "test.xlsx"), (err, data) => {
+        /* fs.readFile(join(__dirname, "../../../../localfile", "test.xlsx"), (err, data) => {
             // console.log(data)
             if (!data) {
                 // throw new Error("文件不存在")
@@ -24,6 +24,10 @@ export class StreamController {
             }     
             return response.send(data)
         })
-        // return response.send(data)
+        // return response.send(data) */
+        const data = fs.createReadStream(join(__dirname, "../../../../localfile", "test.xlsx"))
+        
+        data.pipe(response)
+        return response
     }
 }
