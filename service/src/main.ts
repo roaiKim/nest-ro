@@ -20,7 +20,7 @@ async function bootstrap() {
 
   app.enableCors();
   
-  await app.listen(3000);
+  await app.listen(3200);
 }
 
 bootstrap();
@@ -29,4 +29,4 @@ if (process.env.NODE_ENV === "dev") {
     console.log("dev 环境")
 }
 
-console.info("\n程序已启动", "端口为3000\n")
+console.info("\n程序已启动", "端口为3200\n")
