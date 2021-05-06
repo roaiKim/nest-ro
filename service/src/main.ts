@@ -20,7 +20,11 @@ async function bootstrap() {
 
   app.enableCors();
   
+<<<<<<< Updated upstream
   await app.listen(3200);
+=======
+  await app.listen(8000);
+>>>>>>> Stashed changes
 }
 
 bootstrap();
@@ -29,4 +33,8 @@ if (process.env.NODE_ENV === "dev") {
     console.log("dev 环境")
 }
 
+<<<<<<< Updated upstream
 console.info("\n程序已启动", "端口为3200\n")
+=======
+console.info("\n程序已启动", "端口为8000\n")
+>>>>>>> Stashed changes
