@@ -6,7 +6,6 @@ export class CustomException implements ExceptionFilter{
         const ctx = host.switchToHttp();
         const request = ctx.getRequest();
         const response = ctx.getResponse();
-        console.log("CustomExceptioned")
         if (exception instanceof HttpException) {
             const exceptionBody = exception.getResponse()
             // 只会转化含有code的自定义的 HttpException 而且消息体为json对象

@@ -23,7 +23,7 @@ export class UserController {
     const user = await this.userService.login(requestName, password)
     const {name, id} = user
     const token = this.authService.login({name, userId: id})
-    response.cookie('token', token, { maxAge: 432000000, httpOnly: true })
+    response.cookie('token', token, { maxAge: 432000000, httpOnly: true, domain: "localhost:8000"/* , sameSite: "none",secure: true  */})
     return response.json({code: 0, message: "OK",data: user})
   }
 
@@ -85,7 +85,7 @@ export class UserController {
   }
 
   // 通过jwt获取user
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('check')
   async getUserByCookie(@Req() request: Request & {user: JwtUserToken}): Promise<RoResponse<UserEntity>> {
     const {user} = request;
