@@ -94,7 +94,12 @@ export class UserService {
         code: 15530
       }, HttpStatus.BAD_REQUEST)
     }
-    return user;
+    // 随机 延迟 1000 ms 以内
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(user)
+      }, Math.random() * 1000);
+    });
   }
 
   async login(name: string, password: string): Promise<UserEntity> {
