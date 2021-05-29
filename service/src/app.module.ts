@@ -8,6 +8,7 @@ import { HttpRoModule } from 'module/http/http.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ChatEventsModule } from 'module/webSocket/chat.module';
 import { TimingMoule } from 'module/timingTask/timing.module';
+import { StreamModule } from 'module/stream/stream.module';
 import { join } from 'path';
 
 @Module({
@@ -25,7 +26,8 @@ import { join } from 'path';
     FileModule,
     HttpRoModule,
     ChatEventsModule,
-    TimingMoule
+    TimingMoule,
+    StreamModule
   ]
 })
 export class AppModule {}

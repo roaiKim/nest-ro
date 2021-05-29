@@ -4,6 +4,8 @@ const HTMLPlugin = require("html-webpack-plugin");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const ForkTSCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const TSImportPlugin = require("ts-import-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 
 const config = {
     devServer: {
@@ -12,7 +14,7 @@ const config = {
         hot: true,
         proxy: {
             "/api": {
-                target: "http://127.0.0.1:3000",
+                target: "http://127.0.0.1:3200",
                 secure: false,
                 changeOrigin: true,
             }
@@ -92,12 +94,7 @@ const config = {
         ],
     },
     plugins: [
-        new StylelintPlugin({
-            configFile: env.stylelintConfig,
-            context: env.src,
-            files: "**/*.less",
-            syntax: "less",
-        }),
+        new AntdDayjsWebpackPlugin(),
         new ForkTSCheckerPlugin({
             tsconfig: env.tsConfig,
             eslint: env.eslintConfig,
@@ -109,6 +106,7 @@ const config = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProgressPlugin(),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        // new BundleAnalyzerPlugin()
     ],
 };
 
