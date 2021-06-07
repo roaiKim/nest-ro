@@ -19,12 +19,19 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Body("name") requestName: string, @Body("password") password: string, @Res() response: Response): Promise<any> {
+  async login(@Body("name") requestName: string, @Body("password") password: string/* , @Res() response: Response */): Promise<any> {
     const user = await this.userService.login(requestName, password)
     const {name, id} = user
     const token = this.authService.login({name, userId: id})
-    response.cookie('token', token, { maxAge: 432000000, httpOnly: true/* , domain: "http://127.0.0.1:8000" *//* , sameSite: "none",secure: true  */})
-    return response.json({code: 0, message: "OK",data: user})
+    return {code: 0, message: "OK",data: {
+      user: user,
+      token: token
+    }}
+    /* response.cookie('token', token, { maxAge: 432000000, httpOnly: true, domain: "http://127.0.0.1:8000", sameSite: "none",secure: true})
+    return response.json({code: 0, message: "OK",data: {
+      user: user,
+      token: token
+    }}) */
   }
 
   // @UseGuards(UserRole)
@@ -38,7 +45,7 @@ export class UserController {
     return user;
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('getuserlist')
   async getUserList(@Query() request: UserGetUserRequest): Promise<RoResponse<PageLimitResponse<UserEntity>>> {
     const [list, totalRecord] = await this.userService.getUserList(request)

@@ -16,8 +16,8 @@ export class UserService {
 
   async getUserList(quest: UserGetUserRequest): Promise<[UserEntity[], number]> {
     const user = await this.usersRepository.findAndCount({
-      take: 2,
-      skip: 2
+      take: 10,
+      skip: 0
     });
     return user;
   }
