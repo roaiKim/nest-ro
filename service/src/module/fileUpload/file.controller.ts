@@ -3,7 +3,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { RoResponse } from "module/user/type";
 import { UploadFile } from "./file.type";
 import { zip } from "compressing";
-import { rmdir } from "fs";
+import { rmdir, writeFileSync } from "fs";
 import * as path from 'path';
 import client from 'ali/ali-oss';
 
@@ -12,7 +12,10 @@ export class FileController {
     @Post("upload")
     @UseInterceptors(FileInterceptor("file"))
     upload(@UploadedFile() file: UploadFile): RoResponse<string> {
-        console.log("file", file, file.buffer)
+        // console.log("file", file, file.buffer)
+        const originName = file.originalname;
+        const uploadPath = path.join(__dirname, `../../../../localfile`, originName)
+        writeFileSync(uploadPath, file.buffer);
         return {code: 0, message: "ok", data: null}
     }
 
