@@ -11,12 +11,16 @@ import client from 'ali/ali-oss';
 export class FileController {
     @Post("upload")
     @UseInterceptors(FileInterceptor("file"))
-    upload(@UploadedFile() file: UploadFile): RoResponse<string> {
+    upload(@UploadedFile() file: UploadFile): RoResponse<any> {
         // console.log("file", file, file.buffer)
         const originName = file.originalname;
-        const uploadPath = path.join(__dirname, `../../../../localfile`, originName)
+        const uploadPath = `/github/picture/`;
+        console.log("uploadPath", uploadPath);
         writeFileSync(uploadPath, file.buffer);
-        return {code: 0, message: "ok", data: null}
+        const relativePath = `http://119.29.53.45/picture/${originName}`
+        return {code: 0, message: "ok", data: {
+            relativePath
+        }}
     }
 
     @Post("uploads")
