@@ -14,7 +14,7 @@ export class FileController {
     upload(@UploadedFile() file: UploadFile): RoResponse<any> {
         // console.log("file", file, file.buffer)
         const originName = file.originalname;
-        const uploadPath = path.join(__dirname, `../upload`);
+        const uploadPath = "/github/uploadsss"; // path.join(__dirname, `../upload111`);
         console.log("uploadPath", uploadPath);
         writeFileSync(uploadPath, file.buffer);
         const relativePath = `http://119.29.53.45/picture/${originName}`
