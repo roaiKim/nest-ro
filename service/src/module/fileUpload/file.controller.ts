@@ -3,7 +3,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { RoResponse } from "module/user/type";
 import { UploadFile } from "./file.type";
 import { zip } from "compressing";
-import { rmdir, writeFileSync } from "fs";
+import { rmdir, writeFile } from "fs";
 import * as path from 'path';
 import client from 'ali/ali-oss';
 
@@ -14,9 +14,12 @@ export class FileController {
     upload(@UploadedFile() file: UploadFile): RoResponse<any> {
         // console.log("file", file, file.buffer)
         const originName = file.originalname;
-        const uploadPath = "/github/uploadsss"; // path.join(__dirname, `../upload111`);
+        const uploadPath = "/github/picture"; // path.join(__dirname, `../upload111`);
         console.log("uploadPath", uploadPath);
-        writeFileSync(uploadPath, file.buffer);
+        const filePath = path.join(uploadPath, originName)
+        writeFile(filePath, file.buffer, () => {
+            // 
+        });
         const relativePath = `http://119.29.53.45/picture/${originName}`
         return {code: 0, message: "ok", data: {
             relativePath
