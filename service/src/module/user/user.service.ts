@@ -98,7 +98,7 @@ export class UserService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(user)
-      }, Math.random() * 1000);
+      }, Math.random() * 3000);
     });
   }
 
