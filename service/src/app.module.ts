@@ -3,13 +3,13 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './module/user/user.module';
 import { ConfigModule, ConfigService } from 'nestjs-config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FileModule } from 'module/fileUpload/file.module';
+import { FileUploadModule } from 'module/fileUpload/file.module';
 import { HttpRoModule } from 'module/http/http.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ChatEventsModule } from 'module/webSocket/chat.module';
 import { TimingMoule } from 'module/timingTask/timing.module';
 import { StreamModule } from 'module/stream/stream.module';
-import { join } from 'path';
+import { FileDownloadModule } from 'module/fileDownload/file.module';
 
 @Module({
   imports: [
@@ -23,11 +23,12 @@ import { join } from 'path';
       exclude: ['/api*']
     }), */
     UserModule,
-    FileModule,
+    FileUploadModule,
     HttpRoModule,
     ChatEventsModule,
     TimingMoule,
-    StreamModule
+    StreamModule,
+    FileDownloadModule
   ]
 })
 export class AppModule {}
