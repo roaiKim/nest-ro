@@ -2,11 +2,11 @@ import {join} from "path"
 
 export default {
     type: 'mysql',
-    host: 'rm-wz9bnr1qt0xvgyd5b9o.mysql.rds.aliyuncs.com',
+    host: '139.224.27.51',
     port: 3306,
-    username: 'roaikim',
-    password: '953507353aliyun',
-    database: 'roaikim',
+    username: 'root',
+    password: 'mogu2018',
+    database: 'rosen',
     entities: [join(__dirname, "../", "**/**.entity{.ts,.js}")],
     synchronize: true,
 }
